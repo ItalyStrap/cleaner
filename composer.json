@@ -17,8 +17,7 @@
     },
     "require-dev": {
         "lucatume/wp-browser": "~2.2",
-        "italystrap/debug": "~2.0",
-        "symfony/var-dumper": "^4.3"
+        "italystrap/debug": "~2.0"
     },
     "autoload": {
         "files": [
