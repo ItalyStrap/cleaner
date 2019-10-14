@@ -8,8 +8,8 @@ notifications:
 
 php:
   - '7.0'
-  - '7.1'
-  - nightly
+#  - '7.1'
+#  - nightly
 
 matrix:
   fast_finish: true
@@ -31,8 +31,10 @@ addons:
     packages:
 #      - libjpeg-dev
 #      - libpng12-dev
-      - php5-fpm
-      - php5-mysql
+#      - php5-fpm
+#      - php5-mysql
+      - php7.0-fpm
+      - php7.0-mysql
       - nginx
   hosts:
     - wp.localhost
