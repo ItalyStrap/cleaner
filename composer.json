@@ -1,0 +1,31 @@
+{
+    "name": "italystrap/cleaner",
+    "description": "Data cleaner for PHP",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "overclokk",
+            "email": "info@overclokk.net",
+            "homepage": "https://www.italystrap.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php" : ">=7.0"
+    },
+    "require-dev": {
+        "lucatume/wp-browser": "~2.2",
+        "italystrap/debug": "~2.0",
+        "symfony/var-dumper": "^4.3"
+    },
+    "autoload": {
+        "files": [
+            "functions/helpers.php"
+        ],
+        "psr-4": {
+            "ItalyStrap\\Cleaner\\": "src/"
+        }
+    }
+}
