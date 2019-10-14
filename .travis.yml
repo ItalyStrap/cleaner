@@ -29,8 +29,8 @@ cache:
 addons:
   apt:
     packages:
-      - libjpeg-dev
-      - libpng12-dev
+#      - libjpeg-dev
+#      - libpng12-dev
       - php5-fpm
       - php5-mysql
       - nginx
