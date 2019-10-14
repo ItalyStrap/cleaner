@@ -29,8 +29,8 @@ cache:
 addons:
   apt:
     packages:
-#      - libjpeg-dev
-#      - libpng12-dev
+      - libjpeg-dev
+      - libpng12-dev
 #      - php5-fpm
 #      - php5-mysql
       - php7.0-fpm
@@ -79,7 +79,7 @@ install:
   # update WordPress database to avoid prompts
   - wp core update-db
   # copy the plugin in the WordPress plugin folder
-  - cp -r $TRAVIS_BUILD_DIR $WP_FOLDER/wp-content/plugins/fields
+  - cp -r $TRAVIS_BUILD_DIR $WP_FOLDER/wp-content/plugins/cleaner
   # show the plugins folder contents to make sure the plugin folder is there
   - ls $WP_FOLDER/wp-content/plugins
   # activate the plugin
