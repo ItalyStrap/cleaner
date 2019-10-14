@@ -31,8 +31,6 @@ addons:
     packages:
       - libjpeg-dev
       - libpng12-dev
-#      - php5-fpm
-#      - php5-mysql
       - php7.0-fpm
       - php7.0-mysql
       - nginx
@@ -101,7 +99,6 @@ install:
 
 before_script:
   # restart Nnginx and PHP-FPM services
-#  - sudo service php5-fpm restart
   - sudo service php7.0-fpm restart
   - sudo service nginx restart
 
