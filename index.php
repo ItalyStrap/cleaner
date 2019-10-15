@@ -60,6 +60,57 @@ function cleaner_example() {
 
 //	d( $validator->validate( 'is_email', 'test@localhost.com' ) );
 
+	$callback = function ( $value ) {
+		return  'New value from callback';
+	};
+
+//	d( $callback );
+//
+//	d( \call_user_func( $callback, 'Value' ) );
+
+//	d( \explode( '|', '' ) );
+
+	$rule = 'trim';
+
+//	d( \explode( '|', $rule ) );
+
+	$rules = 'trim|strip_tags';
+
+//	d( \explode( '|', $rules ) );
+
+	$rule_callable = [
+		$callback
+	];
+
+//	d( $rule_callable );
+
+	$rules_callable = [
+		$callback,
+		$callback,
+	];
+
+//	d( $rules_callable );
+
+	$rules_arr = [
+		'trim',
+		'strip_tags'
+	];
+
+//	d( $rules_arr );
+
+
+//	d( \array_merge(
+//		\explode( '|', $rule ),
+//		\explode( '|', $rules )
+//	) );
+
+
+//	$sanitizator->addRules( 'trim' );
+//	$sanitizator->addRules( $callback );
+//	$sanitizator->addRules( [$callback] );
+//	$sanitizator->addRules( [$callback] );
+//
+//	d( $sanitizator->sanitize( '<p>Testo</p>' ) );
 }
 
 add_action( 'wp_footer', 'cleaner_example' );

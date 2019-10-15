@@ -27,7 +27,8 @@ class ValidationTest extends \Codeception\TestCase\WPTestCase
 	public function testValidateIfISAnEmail()
 	{
 		$sut = new Validation();
+		$sut->addRules( '\is_email' );
 
-		$this->assertTrue( $sut->validate( 'is_email', 'test@localhost.com' ) );
+		$this->assertTrue( $sut->validate( 'test@localhost.com' ) );
 	}
 }

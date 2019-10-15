@@ -16,10 +16,20 @@ class ValidationTest extends \Codeception\Test\Unit
     }
 
 	// tests
-	public function testValidateIfISAString()
+	public function testValidateString()
 	{
 		$sut = new Validation();
+		$sut->addRules( 'is_string' );
 
-		$this->assertTrue( $sut->validate( 'is_string', 'test@localhost.com' ) );
+		$this->assertTrue( $sut->validate( 'test@localhost.com' ) );
+	}
+
+	// tests
+	public function testValidateInteger()
+	{
+		$sut = new Validation();
+		$sut->addRules( 'is_int' );
+
+		$this->assertTrue( $sut->validate( 1 ) );
 	}
 }

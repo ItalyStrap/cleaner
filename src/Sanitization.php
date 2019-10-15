@@ -2,9 +2,7 @@
 /**
  * Sanitization API: Sanitization Class
  *
- * @todo https://github.com/zendframework/zend-escaper/blob/master/src/Escaper.php
- *
- * @package ItalyStrap
+ * @package ItalyStrap\Cleaner
  * @since 1.0.0
  */
 
@@ -17,34 +15,30 @@ namespace ItalyStrap\Cleaner;
  */
 class Sanitization implements Sanitizable_Interface {
 
+	use Rules_Trait;
+
 	/**
-	 * Filter the given value
+	 * Filters the given value
 	 *
-	 * @param  string $rules          Insert the filter name you want to use.
-	 *                                Use | to separate more filter.
-	 *                                The order of the filters is evaluate as is
-	 *                                trim|strip_tags will be executed with this order:
-	 *                                trim( strip_tags() )
 	 *
-	 * @param  string $instance_value The value you want to filter.
-	 * @return string                 Return the value filtered
+	 * @param  string|int $data The value you want to filter.
+	 * @return string           Return the value filtered
 	 */
-	public function sanitize( string $rules, $instance_value = '' ) {
+	public function sanitize( $data = '' ) {
 
-		/**
-		 * If $rules is empty explode will return an array with always be count() === 1
-		 * [
-		 * 	0	=> null
-		 * ]
-		 * and foreach will always run do_filter at least one time
-		 */
-		$rules = \explode( '|', $rules );
-
-		foreach ( $rules as $rule ) {
-			$instance_value = $this->do_filter( $rule, $instance_value );
+		if ( ! $this->count() ) {
+			throw new \RuntimeException( 'No rule was provided, use ::addRules( $rules )', 0 );
 		}
 
-		return $instance_value;
+		foreach ( $this->getRules() as $rule ) {
+			$data = $this->do_filter( $rule, $data );
+		}
+
+		/**
+		 * Reset rules before return the value filtered
+		 */
+		$this->resetRules();
+		return $data;
 	}
 
 	/**
@@ -71,16 +65,16 @@ class Sanitization implements Sanitizable_Interface {
 	 * sanitize_option // sanitize_option ha bisogno di 2 valori eseguire test
 	 *
 	 * @access private
-	 * @param  string $rule         The filter name you want to use.
-	 * @param  string $instance_value The value you want to filter.
+	 * @param  string $rule           The filter name you want to use.
+	 * @param  string $data The value you want to filter.
 	 * @return string                 Return the value filtered
 	 */
-	private function do_filter( $rule, $instance_value ) {
+	private function do_filter( $rule, $data ) {
 
-		if ( \is_callable( $rule ) ) {
-			return \call_user_func( $rule, $instance_value );
+		if ( ! \is_callable( $rule ) ) {
+			throw new \InvalidArgumentException( 'Could not resolve a callable', 0 );
 		}
 
-		return \strip_tags( (string) $instance_value );
+		return \call_user_func( $rule, $data );
 	}
 }

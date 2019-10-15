@@ -15,6 +15,8 @@ namespace ItalyStrap\Cleaner;
  */
 class Validation implements Validable_Interface {
 
+	use Rules_Trait;
+
 	/**
 	 * Validate the give value
 	 *
@@ -26,26 +28,32 @@ class Validation implements Validable_Interface {
 	 *       un errore che notifica il campo richiesto.
 	 *       Esempio: 'required|alpha_dash'
 
-	 * @param  string $rules          Insert the rule name you want to use
-	 *                                for validation.
-	 *                                Use | to separate more rules.
-	 * @param  string $instance_value The value you want to validate.
-	 * @return bool                   Return true if valid and folse if it is not
+	 * @param  string $rules Insert the rule name you want to use for validation.
+	 *                       Use | to separate more rules.
+	 * @param  string $data The value you want to validate.
+	 * @return bool         Return true if valid and false if it is not
 	 */
-	public function validate( string $rules, $instance_value = '' ): bool {
+	public function validate( $data = '' ): bool {
 
-		if ( empty( $rules ) ) {
-			return true;
+		if ( ! $this->count() ) {
+			throw new \RuntimeException( 'No rule was provided, use ::addRules( $rules )', 0 );
 		}
 
-		$rules = explode( '|', $rules );
+		foreach ( $this->getRules() as $rule ) {
+			if ( false === $this->do_validation( $rule, $data ) ) {
 
-		foreach ( $rules as $rule ) {
-			if ( false === $this->do_validation( $rule, $instance_value ) ) {
+				/**
+				 * Reset rules before return the value filtered
+				 */
+				$this->resetRules();
 				return false;
 			}
 		}
 
+		/**
+		 * Reset rules before return the value filtered
+		 */
+		$this->resetRules();
 		return true;
 	}
 
@@ -54,14 +62,14 @@ class Validation implements Validable_Interface {
 	 *
 	 * @access private
 	 * @param string $rule Insert the rule name you want to use for validation.
-	 * @param string $instance_value The value you want to validate.
+	 * @param string $data The value you want to validate.
 	 *
 	 * @return bool
 	 */
-	private function do_validation( $rule, $instance_value = '' ): bool {
+	private function do_validation( $rule, $data = '' ): bool {
 
 		if ( \is_callable( $rule ) ) {
-			return (bool) \call_user_func( $rule, $instance_value );
+			return (bool) \call_user_func( $rule, $data );
 		}
 
 		return false;

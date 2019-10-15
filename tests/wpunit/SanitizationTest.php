@@ -27,10 +27,11 @@ class SanitizationTest extends \Codeception\TestCase\WPTestCase
 	public function testReturnStrippedString()
 	{
 		$sut = new Sanitization();
+		$sut->addRules( 'sanitize_text_field' );
 
 		$value = '<p>Test</p>';
 		$expected = 'Test';
 
-		$this->assertEquals( $expected, $sut->sanitize( 'sanitize_text_field', $value ), 'Value is not' );
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not' );
 	}
 }

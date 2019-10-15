@@ -17,11 +17,20 @@ interface Validable_Interface
 	 *       un errore che notifica il campo richiesto.
 	 *       Esempio: 'required|alpha_dash'
 
-	 * @param  string $rules          Insert the rule name you want to use
-	 *                                for validation.
-	 *                                Use | to separate more rules.
-	 * @param  string $instance_value The value you want to validate.
-	 * @return bool                   Return true if valid and folse if it is not
+	 * @param  string $rules Insert the rule name you want to use for validation.
+	 *                       Use | to separate more rules.
+	 * @param  string $data  The value you want to validate.
+	 * @return bool          Return true if valid and folse if it is not
 	 */
-	public function validate( string $rules, $instance_value = '' );
+	public function validate( $data = '' );
+
+	/**
+	 * @param  string|array $rules        Insert the filter name you want to use.
+	 *                                    Use | to separate more filter.
+	 *                                    The order of the filters is evaluate as is
+	 *                                    trim|strip_tags will be executed with this order:
+	 *                                    strip_tags( trim() )
+	 * @return              self
+	 */
+	public function addRules( $rules );
 }

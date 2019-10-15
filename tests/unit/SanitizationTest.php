@@ -18,57 +18,117 @@ class SanitizationTest extends \Codeception\Test\Unit
     }
 
     // tests
-    public function testReturnStrippedStringWithNoRules()
+    public function testThrownRuntimeExceptionIfNoRulesAreProvided()
     {
 		$sut = new Sanitization();
 
-		$value = '<p>Test</p>';
-		$expected = 'Test';
-
-		$this->assertEquals( $expected, $sut->sanitize( '', $value ), 'Value is not' );
+		$this->expectException( '\RuntimeException' );
+		$sut->sanitize( 'Value' );
     }
 
     // tests
-    public function testReturnStrippedStringIfCallbackIsNotExiting()
+    public function testThrownInvalidArgumentExceptionIfCallbackIsNotExiting()
     {
 		$sut = new Sanitization();
+		$this->expectException( '\InvalidArgumentException' );
 
-		$value = '<p>Test</p>';
-		$expected = 'Test';
+		$sut->addRules('callbackNotExisting');
+		$sut->sanitize( 'Value' );
+    }
 
-		$this->assertEquals( $expected, $sut->sanitize( 'callbackNotExisting', $value ), 'Value is not' );
+    // tests
+    public function testThrownInvalidArgumentExceptionIfCouldNotResolveCallable()
+    {
+		$sut = new Sanitization();
+		$this->expectException( '\InvalidArgumentException' );
+
+		$sut->addRules( 1 );
+		$sut->sanitize( 'Value' );
     }
 
     // tests
     public function testReturnStrippedString()
     {
 		$sut = new Sanitization();
+		$sut->addRules( 'strip_tags' );
 
 		$value = '<p>Test</p>';
 		$expected = 'Test';
 
-		$this->assertEquals( $expected, $sut->sanitize( 'strip_tags', $value ), 'Value is not' );
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not as expected' );
     }
 
     // tests
     public function testReturnStrippedAndTrimmedString()
     {
 		$sut = new Sanitization();
+		$sut->addRules( 'strip_tags|trim' );
 
 		$value = ' <p> Test </p> ';
 		$expected = 'Test';
 
-		$this->assertEquals( $expected, $sut->sanitize( 'strip_tags|trim', $value ), 'Value is not' );
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not as expected' );
     }
 
     // tests
-    public function testReturnStringNumber()
+    public function testReturnNumber()
     {
 		$sut = new Sanitization();
+		$sut->addRules( 'intval' );
 
 		$value = 1;
-		$expected = '1';
+		$expected = 1;
 
-		$this->assertEquals( $expected, $sut->sanitize( 'absint', $value ), 'Value is not' );
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not as expected' );
+    }
+
+    // tests
+    public function testReturnFloat()
+    {
+		$sut = new Sanitization();
+		$sut->addRules( 'floatval' );
+
+		$value = 1.1;
+		$expected = 1.1;
+
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not as expected' );
+    }
+
+    // tests
+    public function testReturnValueFromCallable()
+    {
+
+		$value = 1.1;
+		$expected = 'New value from callback';
+
+		$callback = function ( $value ) use ( $expected ) {
+			return  $expected;
+		};
+
+		$sut = new Sanitization();
+		$sut->addRules( [ $callback ] );
+
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not as expected' );
+    }
+
+    // tests
+    public function testReturnValueTrimmedFromCallable()
+    {
+
+		$value = 1.1;
+		$expected = 'New value from callback';
+
+		$callback = function ( $value ) use ( $expected ) {
+			/**
+			 * '  New value from callback  '
+			 */
+			return '  ' . $expected . '  ';
+		};
+
+		$sut = new Sanitization();
+		$sut->addRules( [ $callback ] );
+		$sut->addRules( 'trim' );
+
+		$this->assertEquals( $expected, $sut->sanitize( $value ), 'Value is not as expected' );
     }
 }
