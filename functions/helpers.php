@@ -68,7 +68,7 @@ function alpha_dash( $instance_value ) {
 	return (bool) \preg_match( '/^[a-z0-9-_]+$/', $instance_value );
 }
 
-function natural_not_zero() {
+function natural_not_zero($instance_value) {
 
 	if ( ! \preg_match( '/^[0-9]+$/', $instance_value ) ) {
 		return false;
@@ -79,4 +79,21 @@ function natural_not_zero() {
 	}
 
 	return true;
+}
+
+
+/**
+ * ========================
+ *
+ * Factory function
+ *
+ * ========================
+ */
+
+function sanitizator() {
+	return ( new Cleaner_Factory() )->make( 'Sanitization' );
+}
+
+function validator() {
+	return ( new Cleaner_Factory )->make( 'Validation' );
 }
