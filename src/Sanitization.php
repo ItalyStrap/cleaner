@@ -27,7 +27,7 @@ class Sanitization implements Sanitizable_Interface {
 	public function sanitize( $data = '' ) {
 
 		if ( ! $this->count() ) {
-			throw new \RuntimeException( 'No rule was provided, use ::addRules( $rules )', 0 );
+			throw new Exceptions\NoRuleWasProvidedException( 'No rule was provided, use ::addRules( $rules )', 0 );
 		}
 
 		foreach ( $this->getRules() as $rule ) {
@@ -72,7 +72,7 @@ class Sanitization implements Sanitizable_Interface {
 	private function do_filter( $rule, $data ) {
 
 		if ( ! \is_callable( $rule ) ) {
-			throw new \InvalidArgumentException( 'Could not resolve a callable', 0 );
+			throw new Exceptions\CallableNotResolvableException( 'Could not resolve a callable', 0 );
 		}
 
 		return \call_user_func( $rule, $data );

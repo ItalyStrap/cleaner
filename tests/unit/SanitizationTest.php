@@ -1,5 +1,6 @@
 <?php
 
+use ItalyStrap\Cleaner\IncorrectRuleTypeException;
 use ItalyStrap\Cleaner\Sanitization;
 
 class SanitizationTest extends \Codeception\Test\Unit
@@ -22,27 +23,26 @@ class SanitizationTest extends \Codeception\Test\Unit
     {
 		$sut = new Sanitization();
 
-		$this->expectException( '\RuntimeException' );
+		$this->expectException( '\ItalyStrap\Cleaner\Exceptions\NoRuleWasProvidedException' );
 		$sut->sanitize( 'Value' );
+    }
+
+	// tests
+    public function testThrownInvalidArgumentExceptionIfIncorrectRuleType()
+    {
+		$sut = new Sanitization();
+		$this->expectException( '\ItalyStrap\Cleaner\Exceptions\IncorrectRuleTypeException' );
+
+		$sut->addRules( 1 );
     }
 
     // tests
     public function testThrownInvalidArgumentExceptionIfCallbackIsNotExiting()
     {
 		$sut = new Sanitization();
-		$this->expectException( '\InvalidArgumentException' );
+		$this->expectException( '\ItalyStrap\Cleaner\Exceptions\CallableNotResolvableException' );
 
 		$sut->addRules('callbackNotExisting');
-		$sut->sanitize( 'Value' );
-    }
-
-    // tests
-    public function testThrownInvalidArgumentExceptionIfCouldNotResolveCallable()
-    {
-		$sut = new Sanitization();
-		$this->expectException( '\InvalidArgumentException' );
-
-		$sut->addRules( 1 );
 		$sut->sanitize( 'Value' );
     }
 

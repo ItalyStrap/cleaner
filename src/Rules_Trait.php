@@ -40,7 +40,7 @@ trait Rules_Trait
 		}
 
 		if ( ! \is_array( $rules ) ) {
-			throw new \InvalidArgumentException( 'Incorrect $rules type, only strings and arrays are accepted', 0 );
+			throw new Exceptions\IncorrectRuleTypeException( 'Incorrect $rules type, only strings and arrays are accepted', 0 );
 		}
 
 		$this->rules = \array_merge( $this->rules, $rules );

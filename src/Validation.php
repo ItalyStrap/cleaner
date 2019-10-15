@@ -20,6 +20,8 @@ class Validation implements Validable_Interface {
 	/**
 	 * Validate the give value
 	 *
+	 * @todo Build a message error in case validation fail in ajax requests
+	 *
 	 * @todo Aggiungere rule required
 	 *       Prendere spunto da questo articolo
 	 *       https://tommcfarlin.com/validation-and-sanitization-wordpress-settings-api
@@ -36,7 +38,7 @@ class Validation implements Validable_Interface {
 	public function validate( $data = '' ): bool {
 
 		if ( ! $this->count() ) {
-			throw new \RuntimeException( 'No rule was provided, use ::addRules( $rules )', 0 );
+			throw new Exceptions\NoRuleWasProvidedException( 'No rule was provided, use ::addRules( $rules )', 0 );
 		}
 
 		foreach ( $this->getRules() as $rule ) {
