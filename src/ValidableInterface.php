@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Cleaner;
 
-interface Validable_Interface
+interface ValidableInterface
 {
 	/**
 	 * Validate the give value

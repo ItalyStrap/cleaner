@@ -12,8 +12,10 @@ namespace ItalyStrap\Cleaner;
 
 /**
  * Sanitization class
+ * @todo https://www.php.net/manual/en/ref.filter.php
+ * @todo https://www.php.net/manual/en/function.filter-input.php
  */
-class Sanitization implements Sanitizable_Interface {
+class Sanitization implements SanitizableInterface {
 
 	use Rules_Trait;
 

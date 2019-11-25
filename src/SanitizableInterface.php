@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Cleaner;
 
-interface Sanitizable_Interface
+interface SanitizableInterface
 {
 	/**
 	 * Filters the given value

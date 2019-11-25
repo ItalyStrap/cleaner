@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Cleaner;
 
-class Cleaner_Factory
+class CleanerFactory
 {
 	private $instance = [];
 

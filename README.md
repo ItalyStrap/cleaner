@@ -92,4 +92,8 @@ All feedback / bug reports / pull requests are welcome.
 
 Copyright (c) 2019 Enea Overclokk, ItalyStrap
 
-This code is licensed under the [GPL-2.0 or later](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+This code is licensed under the [GPL-2.0 or later](LICENSE).
+
+## Credits
+
+> TODO

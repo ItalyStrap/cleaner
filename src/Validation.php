@@ -13,7 +13,7 @@ namespace ItalyStrap\Cleaner;
 /**
  * Validation class
  */
-class Validation implements Validable_Interface {
+class Validation implements ValidableInterface {
 
 	use Rules_Trait;
 
@@ -29,11 +29,10 @@ class Validation implements Validable_Interface {
 	 *       Se presente il parametro required inviare
 	 *       un errore che notifica il campo richiesto.
 	 *       Esempio: 'required|alpha_dash'
-
-	 * @param  string $rules Insert the rule name you want to use for validation.
-	 *                       Use | to separate more rules.
+	 *
 	 * @param  string $data The value you want to validate.
 	 * @return bool         Return true if valid and false if it is not
+	 * @throws Exceptions\NoRuleWasProvidedException
 	 */
 	public function validate( $data = '' ): bool {
 
@@ -63,7 +62,9 @@ class Validation implements Validable_Interface {
 	 * Validate the value of key
 	 *
 	 * @access private
+	 *
 	 * @param string $rule Insert the rule name you want to use for validation.
+	 *                       Use | to separate more rules.
 	 * @param string $data The value you want to validate.
 	 *
 	 * @return bool
