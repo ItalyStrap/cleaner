@@ -1,7 +1,7 @@
 {
     "name": "italystrap/cleaner",
     "description": "Data cleaner for PHP",
-    "type": "wordpress-plugin",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -41,5 +41,9 @@
         "test": [
             "test"
         ]
+    },
+    "support"    : {
+        "issues": "https://github.com/ItalyStrap/cleaner/issues",
+        "source": "https://github.com/ItalyStrap/cleaner"
     }
 }

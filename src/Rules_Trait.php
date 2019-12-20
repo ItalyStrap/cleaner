@@ -27,6 +27,13 @@ trait Rules_Trait
 	 */
 	public function addRules( $rules ): self {
 
+		/**
+		 * @todo Make test for this
+		 */
+		if ( \is_callable( $rules ) ) {
+			$rules = (array) $rules;
+		}
+
 		if ( \is_string( $rules ) ) {
 			/**
 			 * If $rules is empty explode will return an array with always be count() === 1
